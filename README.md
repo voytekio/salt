@@ -1,1 +1,2 @@
-# All things salt - custom modules, states, orchestration and reactors
+# All things salt
+  This repo will contain custom modules, states, orchestration and reactors.
