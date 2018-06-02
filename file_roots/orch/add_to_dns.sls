@@ -2,6 +2,8 @@
 {% set target_ip = salt.pillar.get('target_ip', 'blank_target_ip') %}
 {% set zone_file = '/etc/bind/zones/db.v2.com' %}
 {% set zone_tempfile = '/etc/bind/zones/db.v2.com-temp' %}
+{% set target_hostname = target_fqdn.split('.')[0] %}
+{% set skip_dns = salt.pillar.get('skip_dns', False)%}
 
 start_somewhere:
   salt.function:
@@ -10,6 +12,7 @@ start_somewhere:
     - kwarg:
         code: 0
 
+{% if skip_dns == False %}
 append_temp_zone_file:
   salt.state:
     - sls: states.append_dns_zone
@@ -20,6 +23,7 @@ append_temp_zone_file:
         target_ip: {{ target_ip }}
         source_file_location: {{ zone_file }}
         destination_file_location: {{ zone_tempfile }}
+{% endif %}
 
 test_new_zonefile:
   salt.function:
@@ -48,3 +52,19 @@ restart_bind:
         - bind9
     - onchanges:
         - salt: update_real_zone_file
+
+log_some_output:
+    salt.function:
+      - name: test.outputter
+      - tgt: router5
+      - kwarg:
+          data: {{ target_hostname }}
+ 
+update_ip_config:
+    salt.state:
+      - sls: states.update_nic_config
+      - tgt: {{ target_hostname }}
+      - pillar:
+          target_fqdn: {{ target_fqdn }}
+          target_ip: {{ target_ip }}
+          target_hostname: {{ target_hostname }}
