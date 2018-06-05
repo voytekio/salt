@@ -1,0 +1,17 @@
+# this file is managed by salt
+# if you change it manually, it can be overwritten
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address {{ ip }}
+netmask 255.255.255.0
+up route add default gw 192.168.30.2
+
+dns-search    v2.com
+dns-nameservers    192.168.10.2 192.168.10.3
+
+
