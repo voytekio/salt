@@ -1,0 +1,1 @@
+{% set hname = grains['id'] %}{{hname}}
