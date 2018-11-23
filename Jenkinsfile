@@ -6,7 +6,7 @@ node {
     stage('Test') {
         echo 'Testing...'
         sh 'which pip'
-        sh 'source ~/virtualenvs/python_testing/bin/activate'
+        sh 'source ~/virtualenvs/python_testing/bin/activate;which pip'
         sh 'which pip'
         sh 'tox'
         sh 'deactivate'
