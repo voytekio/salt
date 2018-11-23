@@ -1,11 +1,11 @@
 import os
 import pytest
+import subprocess
+import testinfra
 
-print('------------- vars as seen by pytest -----------')
-print(os.environ)
-print('------------- end of vars as seen by pytest -----------')
+import pdb
+
 on_jenkins = 1 if os.environ.get('HUDSON_URL') else 0
-
 print('on_jenkins: {}'.format(on_jenkins))
 
 @pytest.fixture
@@ -14,3 +14,12 @@ def somefixture():
         return "jenkins based fixture"
     else:
         return "non-jenkins based fixture"
+
+@pytest.fixture
+def docker_cr(request):
+    pdb.set_trace()
+    docker_id = subprocess.check_output(['docker', 'run', '-d', 'alpine', 'sleep', '300']).decode().strip()
+    res = testinfra.get_host("docker://" + docker_id)
+    yield res
+    subprocess.check_call(['docker', 'rm', '-f', docker_id])
+
