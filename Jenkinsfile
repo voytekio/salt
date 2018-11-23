@@ -11,7 +11,7 @@ node {
         echo 'Testing...'
         echo 'before setting var TOXENV'
         echo "TOXENV: ${env.TOXENV}"
-        sh 'export TOXENV=jenkins'
+        env.TOXENV = 'jenkins'
         echo 'aftersetting var TOXENV'
         echo "TOXENV: ${env.TOXENV}"
 
