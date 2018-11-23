@@ -9,6 +9,12 @@ node {
     }
     stage('Test') {
         echo 'Testing...'
+        echo 'before setting var TOXENV'
+        echo "TOXENV: ${env.TOXENV}"
+        sh 'export TOXENV=jenkins'
+        echo 'aftersetting var TOXENV'
+        echo "TOXENV: ${env.TOXENV}"
+
         sh 'which pip'
         sh 'source ~/virtualenvs/python_testing/bin/activate;which pip;tox'
     }
