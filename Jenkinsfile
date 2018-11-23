@@ -5,6 +5,7 @@ node {
         echo "WORKSPACE: ${env.WORKSPACE}"
         echo "JENKINS_URL: ${env.JENKINS_URL}"
         echo "HUDSON_URL: ${env.HUDSON_URL}"
+        sh 'printenv'
     }
     stage('Test') {
         echo 'Testing...'
