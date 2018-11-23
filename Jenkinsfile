@@ -6,6 +6,8 @@ node {
     }
     stage('Test') {
         echo 'Testing...'
+        sh 'which pip'
+        sh 'pip list'
         sh 'tox'
     }
     stage('wrapup') {
