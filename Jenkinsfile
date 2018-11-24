@@ -15,6 +15,6 @@ node {
     }
     stage('wrapup') {
         echo 'wrap up'
-        archiveArtifacts '*.log'
+        archiveArtifacts 'logs/*.log'
     }
 }
