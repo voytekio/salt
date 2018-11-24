@@ -6,6 +6,7 @@ def _v_print(text_string):
 
 def test_with_container(docker_cr):
     #assert docker_cr.check_output('pwd') == '/'
+    create_log_message = docker_cr.run('date > /var/log/voytek.log')
     res1 = docker_cr.run('ls -l /')
     #print(res1)
     _v_print(res1)

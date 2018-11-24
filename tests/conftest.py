@@ -25,5 +25,8 @@ def docker_cr(request):
         docker_id = subprocess.check_output(['docker', 'run', '-d', '-v', '/home/voytek/repos/salt/logs:/logs', 'alpine', 'sleep', '300']).decode().strip()
     res = testinfra.get_host("docker://" + docker_id)
     yield res
+    if on_jenkins:
+        res.run('cp /var/log/voytek.log /jenkins_logs/')
+        print('copied logs at end')
     subprocess.check_call(['docker', 'rm', '-f', docker_id])
 
