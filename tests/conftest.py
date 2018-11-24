@@ -17,7 +17,7 @@ def somefixture():
 
 @pytest.fixture
 def docker_cr(request):
-    pdb.set_trace()
+    #pdb.set_trace()
     docker_id = subprocess.check_output(['docker', 'run', '-d', 'alpine', 'sleep', '300']).decode().strip()
     res = testinfra.get_host("docker://" + docker_id)
     yield res
