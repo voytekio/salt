@@ -14,13 +14,13 @@ pipeline {
         stage('Test') {
             steps {
                 echo '----------Stage: Test------------'
-                echo 'empty for now.'
+                sh 'source ~/virtualenvs/python_testing/bin/activate;which pip;tox'
             }
         }
         stage('Wrap-up') {
             steps {
                 echo '----------Stage: Wrap-up-----------'
-                echo 'empty for now.'
+                archiveArtifacts 'logs/*.log'
             }
         }
     }
