@@ -1,20 +1,27 @@
-node {
-    checkout scm
-    stage('Build') {
-        echo 'Building...'
-        echo "WORKSPACE: ${env.WORKSPACE}"
-        echo "JENKINS_URL: ${env.JENKINS_URL}"
-        echo "HUDSON_URL: ${env.HUDSON_URL}"
-        echo '--------start var list------'
-        sh 'printenv'
-        echo '---------end var list-------'
-    }
-    stage('Test') {
-        echo 'Testing...'
-        sh 'source ~/virtualenvs/python_testing/bin/activate;which pip;tox'
-    }
-    stage('wrapup') {
-        echo 'wrap up'
-        archiveArtifacts 'logs/*.log'
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo '------------Stage: Build-----------'
+                echo "WORKSPACE: ${env.WORKSPACE}"
+                echo "JENKINS_URL: ${env.JENKINS_URL}"
+                echo '------------start var list-----------'
+                sh 'printenv'
+                echo '------------end var list-----------'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo '----------Stage: Test------------'
+                echo 'empty for now.'
+            }
+        }
+        stage('Wrap-up') {
+            steps {
+                echo '----------Stage: Wrap-up-----------'
+                echo 'empty for now.'
+            }
+        }
     }
 }
