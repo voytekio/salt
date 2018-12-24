@@ -38,7 +38,7 @@ update_hostname_in_memory:
       - onchanges:
         - replaced_etc_hosts
 
-{% for one_pkg in ['at','vim','curl','python-pip'] %}
+{% for one_pkg in ['at','vim','curl','python-pip','git'] %}
 install_pkgs_{{ one_pkg }}:
   pkg.installed:
     - name: {{ one_pkg }}
