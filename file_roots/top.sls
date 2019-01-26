@@ -10,6 +10,3 @@ base:
     - match: grain
     - states.windows-common
     #- states.apps_windows
-  'vroles:salt_master':
-    - match: grain
-    - states.salt_master
