@@ -8,3 +8,4 @@ salt:
         - /srv/salt-formula
         - /srv/salt
     log_level_logfile: info
+    auto_accept: True
