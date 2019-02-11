@@ -9,3 +9,11 @@ salt:
         - /srv/salt
     log_level_logfile: info
     auto_accept: True
+  minion_remove_config: True
+  minion:
+    master: localhost
+    schedule:
+      - highstate:
+        - function: state.highstate
+        - minutes: 5
+    log_level_logfile: info
