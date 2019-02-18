@@ -5,8 +5,10 @@ git_sync_voytek_salt:
     - target: /srv/voytek-salt
 {% if 'qa' in stage or 'dev' in stage %}
     - rev: develop
+    - branch: develop
 {% else %}
     - rev: master
+    - branch: master
 {% endif %}
 {#    - force_reset: True #}
 
@@ -19,3 +21,7 @@ sync_all_on_changes:
 always_succeeds:
   test.succeed_without_changes:
     - name: foo
+
+always_succeeds2:
+  test.succeed_without_changes:
+    - name: foo2
