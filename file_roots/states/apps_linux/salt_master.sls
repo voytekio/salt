@@ -19,3 +19,7 @@ sync_all_on_changes:
 always_succeeds:
   test.succeed_without_changes:
     - name: foo
+
+always_succeeds2:
+  test.succeed_without_changes:
+    - name: foo2
