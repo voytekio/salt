@@ -5,8 +5,10 @@ git_sync_voytek_salt:
     - target: /srv/voytek-salt
 {% if 'qa' in stage or 'dev' in stage %}
     - rev: develop
+    - branch: develop
 {% else %}
     - rev: master
+    - branch: master
 {% endif %}
 {#    - force_reset: True #}
 
