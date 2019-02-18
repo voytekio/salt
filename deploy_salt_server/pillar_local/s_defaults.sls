@@ -17,3 +17,5 @@ salt:
         - function: state.highstate
         - minutes: 5
     log_level_logfile: info
+    use_superseded:
+      - module.run
