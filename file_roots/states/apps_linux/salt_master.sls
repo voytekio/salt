@@ -15,3 +15,7 @@ sync_all_on_changes:
     - saltutil.sync_all:
     - onchanges:
       - git: git_sync_voytek_salt
+
+always_succeeds:
+  test.succeed_without_changes:
+    - name: foo
