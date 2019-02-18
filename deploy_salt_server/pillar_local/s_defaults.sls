@@ -19,3 +19,6 @@ salt:
     log_level_logfile: info
     use_superseded:
       - module.run
+    grains:
+      vroles:
+        - salt_master
