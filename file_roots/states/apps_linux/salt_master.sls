@@ -9,3 +9,9 @@ git_sync_voytek_salt:
     - rev: master
 {% endif %}
 {#    - force_reset: True #}
+
+sync_all_on_changes:
+  module.run:
+    - saltutil.sync_all:
+    - onchanges:
+      - git: git_sync_voytek_salt

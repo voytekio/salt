@@ -15,5 +15,5 @@ salt:
     schedule:
       - highstate:
         - function: state.highstate
-        - minutes: 5
+        - minutes: 20
     log_level_logfile: info
