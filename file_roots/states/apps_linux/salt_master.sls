@@ -4,6 +4,7 @@ git_sync_voytek_salt:
     - name: https://github.com/voytekio/voytek-salt.git
     - target: /srv/voytek-salt
 {% if 'qa' in stage or 'dev' in stage %}
+{# we're a bit redundant here - rev and branch but per git.latest docs that's expected #}
     - rev: develop
     - branch: develop
 {% else %}
