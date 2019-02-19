@@ -1,0 +1,4 @@
+object Host "{{ hostname }}" {
+  import "generic-host"
+  address = "{{ hostname }}"
+}
