@@ -6,6 +6,14 @@ managed_vimrc_root:
     - group: root
     - mode: 644
 
+managed_systemwide_root:
+  file.managed:
+    - name: /etc/vim/vimrc.local
+    - source: salt://files/linux-common/.vimrc
+    - user: root
+    - group: root
+    - mode: 644
+
 {% set osvar = grains['os'] %}
 managed_sudoers:
   file.managed:
