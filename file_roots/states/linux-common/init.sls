@@ -6,7 +6,7 @@ managed_vimrc_root:
     - group: root
     - mode: 644
 
-managed_systemwide_root:
+managed_systemwide_vimrc:
   file.managed:
     - name: /etc/vim/vimrc.local
     - source: salt://files/linux-common/.vimrc
