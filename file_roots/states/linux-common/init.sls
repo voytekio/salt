@@ -52,3 +52,20 @@ create_reboot_file_for_at:
     - user: root
     - group: root
 
+managed_global_bashrc:
+  file.append:
+    - name: /etc/bash.bashrc
+    - text: |
+
+        # append cm-based rc files:
+        if [ -f /installers/bashrc ]; then
+           source /installers/bashrc
+        fi
+
+managed_global_bashrc_template:
+  file.managed:
+    - name: /installers/bashrc
+    - source: salt://files/templates/bashrc
+    - mode: 644
+    - user: root
+    - group: root
