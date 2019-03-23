@@ -6,6 +6,14 @@ managed_vimrc_root:
     - group: root
     - mode: 644
 
+managed_systemwide_vimrc:
+  file.managed:
+    - name: /etc/vim/vimrc.local
+    - source: salt://files/linux-common/.vimrc
+    - user: root
+    - group: root
+    - mode: 644
+
 {% set osvar = grains['os'] %}
 managed_sudoers:
   file.managed:
@@ -52,3 +60,20 @@ create_reboot_file_for_at:
     - user: root
     - group: root
 
+managed_global_bashrc:
+  file.append:
+    - name: /etc/bash.bashrc
+    - text: |
+
+        # append cm-based rc files:
+        if [ -f /installers/bashrc ]; then
+           source /installers/bashrc
+        fi
+
+managed_global_bashrc_template:
+  file.managed:
+    - name: /installers/bashrc
+    - source: salt://files/templates/bashrc
+    - mode: 644
+    - user: root
+    - group: root
