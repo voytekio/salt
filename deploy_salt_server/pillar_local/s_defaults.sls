@@ -1,4 +1,5 @@
 salt:
+  install_packages: False
   master:
     file_roots:
       base:
