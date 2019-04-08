@@ -1,20 +1,21 @@
 {% set roles = salt['grains.get']('vroles', ['none']) %}
 {% set tags = salt['grains.get']('vtags', 'none') %}
 {% set use_superseded_syntax = salt['config.get']('use_superseded', ['none']) %}
+{% set version = salt['grains.get']('saltversion', '2016.1.1') %}
 
-{% if 'module.run' in use_superseded_syntax %}
-list_attribs_NEW_syntax:
-  module.run:
-    - test.arg:
-      - "roles are: {{ roles }}"
-      - "tags are: {{ tags }}"
-{% else %}
+{% if '2016' in version or 'module.run' not in use_superseded_syntax %}
 list_attribs_OLD_syntax:
   module.run:
     - name: test.arg
     - args:
         - "roles are: {{ roles }}"
         - "tags are: {{ tags }}"
+{% else %}
+list_attribs_NEW_syntax:
+  module.run:
+    - test.arg:
+      - "roles are: {{ roles }}"
+      - "tags are: {{ tags }}"
 {% endif %}
 
 
@@ -44,17 +45,17 @@ say_we_are_a_master:
 {% endif %}
 
 {% if 'salt_master' not in roles %}
-  {% if 'module.run' in use_superseded_syntax %}
-say_we_are_NOT_a_master_NEW_syntax:
-  module.run:
-    - test.arg:
-      - "not a master"
-  {% else %}
+  {% if '2016' in version or 'module.run' not in use_superseded_syntax %}
 say_we_are_NOT_a_master_OLD_syntax:
   module.run:
     - name: test.arg
     - args:
         - "not a master"
+  {% else %}
+say_we_are_NOT_a_master_NEW_syntax:
+  module.run:
+    - test.arg:
+      - "not a master"
   {% endif %}
 
 configure_minion_file:
