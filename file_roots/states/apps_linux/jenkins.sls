@@ -1,5 +1,9 @@
 {% set hostname = salt['grains.get']('id','error') %}
 
+{# 
+TODO: quit if not Ubuntu 16 or more recent
+#}
+
 {% set prereq_list = ['openjdk-8-jre'] %}
 {% for one_pkg in prereq_list %}
 install-{{ one_pkg }}-pkg:
