@@ -34,6 +34,19 @@ java_path_source_it:
     - onchanges:
       - file: java_path_env_variable
 
+add_jenkins_user:
+  user.present:
+    - name: jenkins
+
+install_virtenv:
+  pip.installed:
+    - name: virtualenv
+
+install_tox:
+  pip.installed:
+    - name: tox
+
+{#
 add-jenkins-repo:
   pkgrepo.managed:
     - humanname: jenkins-repo-human-name
@@ -48,3 +61,4 @@ install-jenkins-pkg:
     - name: jenkins
     - require:
         - pkgrepo: add-jenkins-repo
+#}
