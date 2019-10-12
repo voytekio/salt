@@ -38,6 +38,25 @@ add_jenkins_user:
   user.present:
     - name: jenkins
 
+ensure_ssh_dir:
+    file.directory:
+      - name: /home/jenkins/.ssh
+      - user: jenkins
+      - group: jenkins
+      - mode: 700
+      - require:
+        - user: add_jenkins_user
+
+add_jenkins_master_to_authorized_keys:
+    file.managed:
+      - name: /home/jenkins/.ssh/authorized_keys
+      - source: salt://files/templates/authorized_keys_jenkins_slave
+      - mode: 664
+      - user: jenkins
+      - group: jenkins
+      - require:
+        - file: ensure_ssh_dir
+
 install_virtenv:
   pip.installed:
     - name: virtualenv
