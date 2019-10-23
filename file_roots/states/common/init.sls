@@ -44,6 +44,7 @@ say_we_are_a_master:
       - "i'm a master"
 {% endif %}
 
+{# IF MASTER, WE DONT CONFIGURE AUTOMATIC SCHEDULED HIGHSTATE #}
 {% if 'salt_master' not in roles %}
   {% if '2016' in version or 'module.run' not in use_superseded_syntax %}
 say_we_are_NOT_a_master_OLD_syntax:
