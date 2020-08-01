@@ -1,0 +1,13 @@
+# This file describes the network interfaces available on your system
+# For more information, see netplan(5).
+network:
+    version: 2
+    renderer: networkd  # not sure about this one.
+    ethernets:
+        ens160:
+            dhcp4: no
+            addresses: [{{ ip }}/24]
+            gateway4: 192.168.30.2
+            nameservers:
+                    search: [v2.com]
+                    addresses: [192.168.10.2,192.168.10.3]
