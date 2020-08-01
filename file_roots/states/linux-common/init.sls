@@ -1,7 +1,8 @@
 managed_vimrc_root:
   file.managed:
     - name: /root/.vimrc
-    - source: https://github.com/voytekio/rc_files/blob/master/vimrc
+    - source: https://raw.githubusercontent.com/voytekio/rc_files/master/vimrc
+    - skip_verify: True
     - user: root
     - group: root
     - mode: 644
@@ -9,7 +10,8 @@ managed_vimrc_root:
 managed_systemwide_vimrc:
   file.managed:
     - name: /etc/vim/vimrc.local
-    - source: https://github.com/voytekio/rc_files/blob/master/vimrc
+    - source: https://raw.githubusercontent.com/voytekio/rc_files/master/vimrc
+    - skip_verify: True
     - user: root
     - group: root
     - mode: 644

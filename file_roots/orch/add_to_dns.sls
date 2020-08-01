@@ -7,14 +7,19 @@
 {% set skip_dns = salt.pillar.get('skip_dns', False)%}
 {% set skip_set_ip_part = salt.pillar.get('skip_set_ip_part', False)%}
 
+log_msg1:
+  module.run:
+    - log.error:
+      - message: "target_hostname is: {{ target_hostname }}"
+
+{% if not skip_dns %}
 start_somewhere:
   salt.function:
-    - name: test.retcode 
+    - name: test.retcode
     - tgt: {{ dns_host}}
     - kwarg:
         code: 0
 
-{% if not skip_dns %}
 append_temp_zone_file:
   salt.state:
     - sls: states.append_dns_zone
@@ -25,7 +30,6 @@ append_temp_zone_file:
         target_ip: {{ target_ip }}
         source_file_location: {{ zone_file }}
         destination_file_location: {{ zone_tempfile }}
-{% endif %}
 
 test_new_zonefile:
   salt.function:
@@ -50,7 +54,7 @@ restart_bind:
   salt.function:
     - tgt: {{ dns_host}}
     - name: service.restart
-    - arg: 
+    - arg:
         - bind9
     - onchanges:
         - salt: update_real_zone_file
@@ -61,7 +65,8 @@ log_some_output:
       - tgt: {{ dns_host}}
       - kwarg:
           data: {{ target_hostname }}
- 
+{% endif %}
+
 {% if not skip_set_ip_part %}
 update_ip_config:
     salt.state:
