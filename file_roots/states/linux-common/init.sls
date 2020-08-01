@@ -1,7 +1,7 @@
 managed_vimrc_root:
   file.managed:
     - name: /root/.vimrc
-    - source: salt://files/linux-common/.vimrc
+    - source: https://github.com/voytekio/rc_files/blob/master/vimrc
     - user: root
     - group: root
     - mode: 644
@@ -9,7 +9,7 @@ managed_vimrc_root:
 managed_systemwide_vimrc:
   file.managed:
     - name: /etc/vim/vimrc.local
-    - source: salt://files/linux-common/.vimrc
+    - source: https://github.com/voytekio/rc_files/blob/master/vimrc
     - user: root
     - group: root
     - mode: 644
