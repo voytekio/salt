@@ -76,12 +76,12 @@ log_some_output:
 
 {% if not skip_set_ip_part %}
 
-  {# find interface name. skip the localhost one. If multiple ints found, we'll pick the first one #}
+  {# find interface name. skip the localhost one and ones w/o IP address. If multiple ints found, we'll pick the first one #}
   {% set interface_grain = salt['saltutil.cmd'](target_minion_name, 'grains.get', ['ip_interfaces']) %}
   {% set interfaces = interface_grain.get(target_minion_name).get("ret") %}
   {% set interface_name = [] %}
   {% for key, value in interfaces.items() %}
-    {% if key not in 'lo' %}
+    {% if key not in 'lo' and value %}
       {# see https://stackoverflow.com/questions/46939756/setting-variable-in-jinja-for-loop-doesnt-persist-between-iterations #}
       {% if interface_name.append(key) %}{% endif %}
     {% endif %}
