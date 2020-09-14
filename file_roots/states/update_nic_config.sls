@@ -1,4 +1,5 @@
 {% set ip = salt.pillar.get('target_ip', 'blank_ip') %}
+{% set interface_name = salt.pillar.get('interface_name', 'blank_int') %}
 
 test_change:
     test.configurable_test_state:
@@ -15,6 +16,7 @@ manage_ip_interfaces_file:
       - template: jinja
       - context:
         ip: {{ ip }}
+        interface_name: {{ interface_name }}
       - mode: 644
 {% else %}
     file.managed:

@@ -6,11 +6,18 @@
 {% set target_hostname = target_fqdn.split('.')[0] %}
 {% set skip_dns = salt.pillar.get('skip_dns', False)%}
 {% set skip_set_ip_part = salt.pillar.get('skip_set_ip_part', False)%}
+{% set test_ping = salt['saltutil.cmd'](target_fqdn, 'test.ping') %}
+
+{% if test_ping %}
+  {% set target_minion_name = target_fqdn %}
+{% else %}
+  {% set target_minion_name = target_hostname %}
+{% endif %}
 
 log_msg1:
   module.run:
     - log.error:
-      - message: "target_hostname is: {{ target_hostname }}"
+      - message: "target_minion_name is: {{ target_minion_name }}"
 
 {% if not skip_dns %}
 start_somewhere:
@@ -64,16 +71,28 @@ log_some_output:
       - name: test.outputter
       - tgt: {{ dns_host}}
       - kwarg:
-          data: {{ target_hostname }}
+          data: {{ target_minion_name }}
 {% endif %}
 
 {% if not skip_set_ip_part %}
+
+  {# find interface name. skip the localhost one. If multiple ints found, we'll pick the first one #}
+  {% set interface_grain = salt['saltutil.cmd'](target_minion_name, 'grains.get', ['ip_interfaces']) %}
+  {% set interfaces = interface_grain.get(target_minion_name).get("ret") %}
+  {% set interface_name = [] %}
+  {% for key, value in interfaces.items() %}
+    {% if key not in 'lo' %}
+      {# see https://stackoverflow.com/questions/46939756/setting-variable-in-jinja-for-loop-doesnt-persist-between-iterations #}
+      {% if interface_name.append(key) %}{% endif %}
+    {% endif %}
+  {% endfor %}
+
 update_ip_config:
     salt.state:
       - sls: states.update_nic_config
-      - tgt: {{ target_hostname }}
+      - tgt: {{ target_minion_name }}
       - pillar:
           target_fqdn: {{ target_fqdn }}
           target_ip: {{ target_ip }}
-          target_hostname: {{ target_hostname }}
+          interface_name: {{ interface_name|first }}
 {% endif %}
