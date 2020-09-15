@@ -18,7 +18,7 @@ salt:
     schedule:
       - highstate:
         - function: state.highstate
-        - minutes: 5
+        - minutes: 30
 {% endif %}
     log_level_logfile: info
     use_superseded:
