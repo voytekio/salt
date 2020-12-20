@@ -1,3 +1,8 @@
+{% if 'ansible' in salt['grains.get']('vtags', []) %}
+base:
+  '*':
+    - states.ansible_managed_stub
+{% else %}
 base:
   '*':
     - states.common
@@ -10,3 +15,4 @@ base:
     - match: grain
     - states.windows-common
     #- states.apps_windows
+{% endif %}
